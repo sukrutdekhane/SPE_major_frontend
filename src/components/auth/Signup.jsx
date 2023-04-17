@@ -4,13 +4,15 @@ import Title from '../form/Title'
 import Forminput from '../form/Forminput'
 import Submit from '../form/Submit'
 import CustomLink from '../CustomLink'
+import { commonModalClasses } from '../../utils/theme'
+import FormContainer from '../form/FormContainer'
 
 
 export default function Signup() {
  
-return <div className="fixed inset-0 bg-primary -z-10 flex justify-center items-center">
+return <FormContainer>
     <Container>
-        <form className="bg-secondary rounded p-6 w-72 space-y-6">
+        <form className={commonModalClasses+" w-72"}>
            <Title> Sign up</Title>
           <Forminput label="First Name" placeholder="Sukrut" name="name" />
           <Forminput label="Last Name" placeholder="Dekhane" name="name" />
@@ -24,6 +26,6 @@ return <div className="fixed inset-0 bg-primary -z-10 flex justify-center items-
           </div>
         </form>
     </Container>
-</div>
+</FormContainer>
   
 }
