@@ -7,6 +7,7 @@ import Home from './components/Home';
 import PhoneVerification from './components/auth/PhoneVerification';
 import ForgetPassword from './components/auth/ForgetPassword';
 import ConfirmPassword from './components/auth/ConfirmPassword';
+//import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   
