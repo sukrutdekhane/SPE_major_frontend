@@ -11,4 +11,4 @@ export const createUser=async (phoneNumber)=>{
 
       return {error: error.message || error}
     }
-}
+  }
