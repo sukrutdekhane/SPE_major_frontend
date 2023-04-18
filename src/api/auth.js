@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const createUser=async (userInfo)=>{
+export const createUser=async (phoneNumber)=>{
     try{
-   const {data}= await axios.post('http://localhost:8081/api/auth/send-otp',userInfo);
+      console.log(phoneNumber)
+   const {data}= await axios.post('http://localhost:8081/api/auth/send-otp?phoneNumber=${phoneNumber}');
    return data;
     } catch(error){
       const{response}=error;
