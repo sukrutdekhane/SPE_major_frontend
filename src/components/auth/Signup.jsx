@@ -2,11 +2,16 @@ import Container from '../container'
 import React, { useState } from 'react'
 import Title from '../form/Title'
 import Forminput from '../form/Forminput'
-import Submit from '../form/Submit'
+ import Submit from '../form/Submit'
 import CustomLink from '../CustomLink'
 import { commonModalClasses } from '../../utils/theme'
 import FormContainer from '../form/FormContainer'
 import { createUser } from '../../api/auth'
+import { useNavigate } from 'react-router-dom'
+
+
+
+
 
 const validateUserInfo = ({first_name,last_name,phone_number,email,password}) => {
     const validPhoneNumber =/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -54,6 +59,8 @@ export default function Signup() {
     password:"",
   });
 
+  const navigate=useNavigate();
+
   const handleChange = ({target}) =>{
     const {value,name} = target;
     setUserInfo({...userInfo, [name]:value});
@@ -65,12 +72,16 @@ export default function Signup() {
     if(!ok)
     console.log(error);
     
-    const{err,user}=await createUser(userInfo.phone_number);
-    if(err)
-      return console.log(err);
+    const response=await createUser(userInfo.phone_number);
+    if(response.error)
+      return console.log(response.error);
     
-      console.log(user);
-  }
+      navigate('/auth/verification', {
+        state: {user: response.user},
+        replace: true});
+   
+  };
+
 
   const {first_name,last_name,phone_number,email,password}=userInfo
 return <FormContainer>
@@ -82,7 +93,7 @@ return <FormContainer>
           <Forminput value={phone_number}  onChange={handleChange} label="Phone Number" placeholder="0123456789" name="phone_number" />
           <Forminput value={email}  onChange={handleChange} label="Email" placeholder="john@example.com" name="email" />
           <Forminput value={password}  onChange={handleChange} label="Password" placeholder="********" name="password" type="password" />
-          <Submit value="Sign up" />
+         <Submit value="Sign up" />
           <div className="flex justify-between">
           <CustomLink className="text-dark-subtle hover:text-white transition" to="/auth/forget-password" >Forget Password</CustomLink>
           <CustomLink className="text-dark-subtle hover:text-white transition" to="/auth/signin" >Sign in</CustomLink>

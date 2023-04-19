@@ -1,19 +1,39 @@
-import React from 'react'
+import React, { isValidElement } from 'react'
 import Container from '../container'
 import Title from '../form/Title';
 import Submit from '../form/Submit';
 import { useState,useEffect,useRef} from "react";
 import FormContainer from '../form/FormContainer';
 import { commonModalClasses } from '../../utils/theme';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { verifyUser } from '../../api/auth';
 
 const OTP_LENGTH=6;
 
+const isValidOTP=(otp)=>{
+  let valid = false;
+
+  for(let val of otp){
+    valid=!isNaN(parseInt(val))
+    if(!valid) break;
+  }
+
+  return valid;
+}
+
+
 let currentOTPIndex;
 export default function PhoneVerification() {
-  const [otp,setOtp]=useState(new Array(OTP_LENGTH).fill(''))
+  const [otp,setOtp]=useState(new Array(OTP_LENGTH).fill(""))
   const[activeOtpIndex,setActiveOtpIndex]=useState(0);
   
   const inputRef=useRef()
+
+  const {state}=useLocation()
+  const user= state?.user
+
+  const navigate=useNavigate()
 
   const focusNextInputField=(index)=>{
     setActiveOtpIndex(index+1)
@@ -48,14 +68,33 @@ const handleKeyDown = ({ key }, index) => {
    }
 };
 
-  useEffect(()=>{
-    inputRef.current?.focus()
+const handleSubmit = async(e)=>{
+    e.preventDefault();
 
-  },[activeOtpIndex]);
+    if(!isValidOTP(otp)){
+        return console.log("Invalid OTP");
+    }
+    
+    const {error,message} = await verifyUser({OTP: otp})
+    //submit otp
+}
+ 
+useEffect(()=>{
+    inputRef.current?.focus()
+ },[activeOtpIndex]);
+
+// useEffect(()=>{
+//    if(!user)
+//    navigate('/not-found')
+// },[user])
+
+//  if(!user){
+//   return null;
+//  }
   return (
     <FormContainer>
     <Container>
-        <form className={commonModalClasses}>
+        <form onSubmit={handleSubmit} className={commonModalClasses}>
            <div>
            <Title> Please enter the OTP to verify your account</Title>
            <p className="text-center dark:text-dark-subtle text-light-subtle">OTP has been sent to your email</p>
@@ -74,7 +113,7 @@ const handleKeyDown = ({ key }, index) => {
             );
           })}
           </div>
-          <Submit value="Send Link" />
+          <Submit value="Verify Account" />
          
         </form>
     </Container>

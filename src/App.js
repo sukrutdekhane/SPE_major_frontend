@@ -7,7 +7,7 @@ import Home from './components/Home';
 import PhoneVerification from './components/auth/PhoneVerification';
 import ForgetPassword from './components/auth/ForgetPassword';
 import ConfirmPassword from './components/auth/ConfirmPassword';
-//import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import NotFound from './components/NotFound';
 
 export default function App() {
   
@@ -21,6 +21,7 @@ export default function App() {
         <Route path="/auth/verification" element={<PhoneVerification/>} />
         <Route path="/auth/forget-password" element={<ForgetPassword/>} />
         <Route path="/auth/confirm-password" element={<ConfirmPassword/>} />
+        <Route path="*" element={<NotFound/>} />
     </Routes>
     </>
     );
