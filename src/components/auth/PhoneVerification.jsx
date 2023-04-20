@@ -7,7 +7,7 @@ import FormContainer from '../form/FormContainer';
 import { commonModalClasses } from '../../utils/theme';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { verifyUser } from '../../api/auth';
+// import { verifyUser } from '../../api/auth';
 
 const OTP_LENGTH=6;
 
@@ -31,7 +31,7 @@ export default function PhoneVerification() {
   const inputRef=useRef()
 
   const {state}=useLocation()
-  const user= state?.user
+  const user= state?.user     //user will contain otp.
 
   const navigate=useNavigate()
 
@@ -68,16 +68,16 @@ const handleKeyDown = ({ key }, index) => {
    }
 };
 
-const handleSubmit = async(e)=>{
-    e.preventDefault();
+// const handleSubmit = async(e)=>{
+//     e.preventDefault();
 
-    if(!isValidOTP(otp)){
-        return console.log("Invalid OTP");
-    }
+//     if(!isValidOTP(otp)){
+//         return console.log("Invalid OTP");
+//     }
     
-    const {error,message} = await verifyUser({OTP: otp})
-    //submit otp
-}
+//     const {error,message} = await verifyUser({OTP: otp})
+//     //submit otp
+// }
  
 useEffect(()=>{
     inputRef.current?.focus()
@@ -94,7 +94,7 @@ useEffect(()=>{
   return (
     <FormContainer>
     <Container>
-        <form onSubmit={handleSubmit} className={commonModalClasses}>
+        <form  className={commonModalClasses}>
            <div>
            <Title> Please enter the OTP to verify your account</Title>
            <p className="text-center dark:text-dark-subtle text-light-subtle">OTP has been sent to your email</p>
