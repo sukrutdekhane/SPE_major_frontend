@@ -6,7 +6,7 @@ import Forminput from '../form/Forminput'
 import CustomLink from '../CustomLink'
 import { commonModalClasses } from '../../utils/theme'
 import FormContainer from '../form/FormContainer'
-import { createUser } from '../../api/auth'
+ import { createUser } from '../../api/auth'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -79,7 +79,7 @@ export default function Signup() {
       navigate('/auth/verification', {
         state: {user: response.user},
         replace: true});
-   
+       
   };
 
 
