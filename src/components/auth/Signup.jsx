@@ -57,6 +57,7 @@ export default function Signup() {
     phone_number:"",
     email:"",
     password:"",
+    
   });
 
   const navigate=useNavigate();
@@ -64,6 +65,7 @@ export default function Signup() {
   const handleChange = ({target}) =>{
     const {value,name} = target;
     setUserInfo({...userInfo, [name]:value});
+    sessionStorage.setItem("UserInfo", userInfo);
   }
 
   const handleSubmit = async(e) => {
@@ -73,6 +75,7 @@ export default function Signup() {
     console.log(error);
     
     const response=await createUser(userInfo.phone_number);
+    
     if(response.error)
       return console.log(response.error);
     

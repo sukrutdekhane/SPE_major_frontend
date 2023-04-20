@@ -4,7 +4,7 @@ export const createUser=async (phoneNumber)=>{
     try{
       console.log(phoneNumber)
 
-   const {data}= await axios.post('http://localhost:8081/api/auth/send-otp?phoneNumber=${phoneNumber}');
+   const {data}= await axios.post(`http://e417-119-161-98-68.ngrok-free.app/api/auth/send-otp?phoneNumber=${phoneNumber}`);
    return data;
     } catch(error){
       const{response}=error;
@@ -15,9 +15,11 @@ export const createUser=async (phoneNumber)=>{
 
 }
 
-export const verifyUser=async (userInfo)=>{
+export const verifyUser=async (userInfo,OTP)=>{
   try{
- const {data}= await axios.post('http://localhost:8081/api/auth/validate-otp-register',userInfo);
+  console.log(userInfo);
+  console.log(OTP);
+ const {data}= await axios.post(`http://e417-119-161-98-68.ngrok-free.app/api/auth/validate-otp-register?OTP=${OTP}`,userInfo);
  return data;
   } catch(error){
     const{response}=error;

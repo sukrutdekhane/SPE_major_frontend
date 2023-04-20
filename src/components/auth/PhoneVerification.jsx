@@ -8,17 +8,17 @@ import { commonModalClasses } from '../../utils/theme';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
  import { verifyUser } from '../../api/auth';
+ import Signup from './Signup';
+ 
 
 const OTP_LENGTH=6;
 
 const isValidOTP=(otp)=>{
   let valid = false;
-
   for(let val of otp){
     valid=!isNaN(parseInt(val))
     if(!valid) break;
   }
-
   return valid;
 }
 
@@ -59,6 +59,8 @@ export default function PhoneVerification() {
       
       setOtp([...newOtp]);
 
+      
+      
 };
 
 const handleKeyDown = ({ key }, index) => {
@@ -74,8 +76,9 @@ const handleSubmit = async(e)=>{
     if(!isValidOTP(otp)){
         return console.log("Invalid OTP");
     }
-    
-    const {error,message} = await verifyUser({OTP: otp})
+    const userInfo = sessionStorage.getItem("UserInfo");
+    let OTP = otp.join('');
+    const {error,message} = await verifyUser({userInfo:userInfo,OTP: OTP})
     //submit otp
 }
  
